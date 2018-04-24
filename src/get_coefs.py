@@ -2,11 +2,10 @@ import json
 import requests
 from LiveGame import LiveGame
 
-# url = requests.get('http://1xstavka.ru').url
 
 
 def get_live_games():
-    url = "https://1xbwir.top/LiveFeed/GetCyberGamesZip?lng=ru&mode=4"
+    url = requests.get('http://1xstavka.ru').url + '/LiveFeed/GetCyberGamesZip?lng=ru&mode=4'
     data = json.loads(requests.get(url).text)
     games = []
 
