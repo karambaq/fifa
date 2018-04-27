@@ -1,4 +1,6 @@
 import pdb
+from hist import check_is_end
+from datetime import datetime
 from itertools import product
 from get_time import get_times
 from insert_row import insert_row
@@ -20,6 +22,7 @@ class LiveGame:
         self._first_half_goals = []
         self._second_half_goals = []
         self._state = state
+        self._date = '%s %s' % (datetime.today().isoformat()[:10], datetime.today().time().isoformat()[:5])
 
     def __str__(self):
         return "%s\n%s\n%s\nП1:%s Х:%s П2:%s\n%s" % (
@@ -42,6 +45,9 @@ class LiveGame:
             self._w2,
             self._state,
         )
+
+    def get_league(self):
+        return self._league
 
     def get_teams(self):
         return self._teams
@@ -75,6 +81,7 @@ class LiveGame:
 
     def get_row(self):
         row = [
+            self._date,
             self._league,
             self._first_team,
             self._second_team,
@@ -82,7 +89,13 @@ class LiveGame:
             self._x,
             self._w2,
         ]
-        row.extend(self._goals)
+        if self._first_half_goals and self._second_half_goals:
+            row.extend(self._first_half_goals)
+            row.append('%s:%s' % (self._first_half_score[0], self._first_half_score[1]))
+            row.extend(self._second_half_goals)
+            row.append('%s:%s' % (self._second_half_score[0], self._second_half_score[1]))
+        else:
+            row.extend(self._goals)
         row.append('%s:%s' % (self._score[0], self._score[1]))
 #         if self.is_end():
 #             row.append("End")
@@ -112,8 +125,16 @@ class LiveGame:
     def set_end(self):
         # if 'self._first_half_count_goals' in locals():
         print("Setting end for %s" % self._teams)
-        for i in range(len(self._goals), 12):
-            self._goals.append(0)
+        self._first_half_goals = list(filter(lambda g: g != 0 and int(g[-2:]) <= 45, self._goals))
+        self._first_half_score = [sum(g[0] == '1' for g in self._first_half_goals), sum(g[0] == '2' for g in self._first_half_goals)]
+        for i in range(len(self._first_half_goals), 6):
+            self._first_half_goals.append(0)
+
+        self._second_half_goals = list(filter(lambda g: g != 0 and int(g[-2:]) > 45, self._goals))
+        self._second_half_score = [sum(g[0] == '1' for g in self._second_half_goals), sum(g[0] == '2' for g in self._second_half_goals)]
+        for i in range(len(self._second_half_goals), 6):
+            self._second_half_goals.append(0)
+
         self._state = "End"
 
 
@@ -138,15 +159,15 @@ def update_games(prev_games, cur_games):
             if is_new_goal(p_g, c_g):
                 print("Goal in %s on %s" % (p_g.get_teams(), times[c_g.get_teams()]))
                 if c_g.get_first_score() != p_g.get_first_score():
-                    print(times[c_g.get_teams()])
-                    print(str(times[c_g.get_teams()]).split())
+                    # print(times[c_g.get_teams()])
+                    # print(str(times[c_g.get_teams()]).split())
                     p_g.add_goal(
                         '1', times[c_g.get_teams()].split(':')[0], c_g.get_score()
                     )
                     p_g.set_score(c_g.get_score())
                 elif c_g.get_second_score() != p_g.get_second_score():
-                    print(times[c_g.get_teams()])
-                    print(str(times[c_g.get_teams()]).split())
+                    # print(times[c_g.get_teams()])
+                    # print(str(times[c_g.get_teams()]).split())
                     p_g.add_goal(
                             '2', times[c_g.get_teams()].split(':')[0], c_g.get_score()
                     )
@@ -154,7 +175,7 @@ def update_games(prev_games, cur_games):
                 print("Row: %s" % p_g.get_row())
                 print()
 
-            if c_g.get_teams() == p_g.get_teams() and (c_g.is_end() or (c_g.get_teams() in times.keys() and times[c_g.get_teams()] == '90:00')) and c_g.has_coefs():
+            if c_g.get_teams() == p_g.get_teams() and c_g.is_end() and c_g.has_coefs():
                 p_g.set_end()
 
             seen.add((p_g, c_g))

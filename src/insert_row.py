@@ -15,6 +15,7 @@ def insert_row(row):
     gc = gspread.authorize(credentials)
 
     sheet = gc.open("Cyber Soccer").sheet1
+    # sheet = gc.open_by_url("https://docs.google.com/spreadsheets/d/1fCLyCaaFFCuHuTnDvr16fd1MOMEB1hw7zlp8TJ5mH44/edit?usp=sharing").sheet1
     sheet.insert_row(row, 2)
 
 
