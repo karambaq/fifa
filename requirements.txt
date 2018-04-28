@@ -1,4 +1,5 @@
 gspread==3.0.0
-lxml==4.2.1
+pytz==2017.3
 requests==2.18.4
-google_api_python_client==1.6.6
+lxml==4.2.1
+google_api_python_client==1.6.7
