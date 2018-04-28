@@ -5,7 +5,8 @@ from LiveGame import LiveGame
 
 
 def get_live_games():
-    url = requests.get('http://1xstavka.ru').url + '/LiveFeed/GetCyberGamesZip?lng=ru&mode=4'
+    # url = requests.get('http://1xstavka.ru').url + '/LiveFeed/GetCyberGamesZip?lng=ru&mode=4'
+    url = requests.get('http://1xstavka.ru').url + '/LiveFeed/Get1x2_Zip?sports=85&count=20&mode=4&'
     data = json.loads(requests.get(url).text)
     games = []
 

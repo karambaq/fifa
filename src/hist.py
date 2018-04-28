@@ -16,7 +16,8 @@ def check_is_end(league, teams, score):
             league_str, teams_str = g.get('Head')[4:6]
             teams_str = teams_str.split()
             score_str = [int(g.get('Head')[6][0]), int(g.get('Head')[6][2])]
-            if [league_str, teams_str[0], teams_str[2], score_str] == [league, teams[0], teams[2], score]:
+            if [league_str, teams_str[0], teams_str[2]] == [league, teams[0], teams[2]]:
                 return True
+    print('Checking end for %s' % teams)
     return False
 

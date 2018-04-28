@@ -4,7 +4,7 @@ from lxml.html import fromstring
 
 def get_times():
     url = requests.get('http://1xstavka.ru').url + '/cyber/FIFA/'
-    # url = "https://1xboum.top/cyber/FIFA/"
+    # url = "https://1xbujq.top/cyber/FIFA/"
     html_doc = requests.get(url).text
     tree = fromstring(html_doc)
 

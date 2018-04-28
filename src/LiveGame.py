@@ -75,8 +75,6 @@ class LiveGame:
         self._score = score
 
     def add_goal(self, team, time, new_score):
-        print("Sum: %s" % int(len(self._goals) / 2))
-        print("New score: %s" % sum(int(s) for s in new_score))
         if len(self._goals)  == sum(int(s) for s in new_score) - 1:
             self._goals.append('%s %s' % (team, time))
 
@@ -154,11 +152,11 @@ def update_games(prev_games, cur_games):
 
     # print('prev_games %s' % prev_games)
     # print('cur_games %s' % cur_games)
-    print()
+    # print()
     for p_g, c_g in product(prev_games, cur_games):
         if (p_g, c_g) not in seen and (c_g, p_g) not in seen:
             if is_new_goal(p_g, c_g):
-                print("Goal in %s on %s" % (p_g.get_teams(), times[c_g.get_teams()]))
+                print("Goal in %s on %s" % (p_g.get_teams(), times[p_g.get_teams()]))
                 if c_g.get_first_score() != p_g.get_first_score():
                     # print(times[c_g.get_teams()])
                     # print(str(times[c_g.get_teams()]).split())
