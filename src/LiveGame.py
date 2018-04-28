@@ -1,4 +1,4 @@
-import pdb
+import pytz
 from hist import check_is_end
 from datetime import datetime
 from itertools import product
@@ -22,6 +22,9 @@ class LiveGame:
         self._first_half_goals = []
         self._second_half_goals = []
         self._state = state
+        local = pytz.timezone("Europe/Moscow")
+        moscow_now = datetime.now(local)
+        print(moscow_now)
         self._date = '%s %s' % (datetime.today().isoformat()[:10], datetime.today().time().isoformat()[:5])
 
     def __str__(self):
