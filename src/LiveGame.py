@@ -23,7 +23,7 @@ class LiveGame:
         self._second_half_goals = []
         self._state = state
         local = pytz.timezone("Europe/Moscow")
-        moscow_now = datetime.now(local)
+        moscow_now = datetime.now(local)[18]
         print(moscow_now)
         self._date = '%s %s' % (datetime.today().isoformat()[:10], datetime.today().time().isoformat()[:5])
 
