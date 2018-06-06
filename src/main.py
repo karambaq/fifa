@@ -7,6 +7,7 @@ from insert_row import insert_row
 from LiveGame import update_games
 from get_coefs import get_live_games
 
+
 if __name__ == "__main__":
     games = get_live_games()
     sended = deque(maxlen=20)

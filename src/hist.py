@@ -20,4 +20,3 @@ def check_is_end(league, teams, score):
                 return True
     print('Checking end for %s' % teams)
     return False
-
