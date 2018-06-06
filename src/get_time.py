@@ -10,7 +10,7 @@ def get_times():
 
     teams = [g.get("title").strip() for g in tree.xpath('//span[@class="n"]')]
     unscraped_times = [
-        times.text for times in tree.xpath('//div[@class="c-events__time  "]//span')
+        times.text for times in tree.xpath('//div[@class="c-events__time "]//span')
     ]
     # NEEDS TO TEST!!
     # Inspect elements where mets ':' or None value, after this, replacing None values with the blank
